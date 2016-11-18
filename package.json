@@ -1,0 +1,24 @@
+{
+  "name": "weekend-challenge4",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/afroiland/Weekend-Challenge4.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/afroiland/Weekend-Challenge4/issues"
+  },
+  "homepage": "https://github.com/afroiland/Weekend-Challenge4#readme",
+  "dependencies": {
+    "body-parser": "^1.15.2",
+    "express": "^4.14.0",
+    "jquery": "^3.1.1"
+  }
+}
