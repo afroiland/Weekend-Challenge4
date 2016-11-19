@@ -2,6 +2,8 @@ $(document).ready(function () {
   console.log('test');
     getTasks();
     $('#taskSubmit').on('click', postTask);
+    $('#container').on('click', '.complete', completeTask);
+//    $('.delete').on('click', deleteTask);
 
 
 });
@@ -21,16 +23,18 @@ function getTasks() {
 }
 
 function appendTasks(tasks) {
-  $("#containerSpan").empty();
+  $("#container").empty();
   for (var i = 0; i < tasks.length; i++) {
+    $("#container").append('<div class="containerDiv"></div>');
     $el = $('#container').children().last();
     var task = tasks[i];
     $el.data('id', task.id);
-//    $el.append(task);
-    console.log('append task: ', task);
+//    console.log('append task: ', task);
     var string = '<p>Task: '+tasks[i].taskname+' Status:'+tasks[i].completionstatus+'</p>'
-    console.log('append: ', string);
+//console.log('append: ', string);
     $el.append(string);
+    $el.append('<button class="complete">Task Completed</button>');
+    $el.append('<button class="delete">Delete Task</button>');
   }
 }
 
@@ -54,4 +58,32 @@ function postTask() {
       console.log('could not post a new task');
     }
   })
+}
+
+function completeTask() {
+  event.preventDefault();
+  var id = $(this).parent().data('id');
+  console.log('id: ', id);
+
+  // make book object
+  var task = {};
+  var fields = $(this).parent().children().serializeArray();
+  fields.forEach(function(field) {
+    task[field.name] = field.value;
+  });
+  console.log('complete task: ', task);
+
+  $.ajax({
+    type: 'PUT',
+    url: '/tasks/' + id,
+    data: task,
+    success: function(result) {
+      console.log('updated!!!!');
+      getTasks();
+    },
+    error: function(result) {
+      console.log('could not update book!');
+    }
+  });
+
 }

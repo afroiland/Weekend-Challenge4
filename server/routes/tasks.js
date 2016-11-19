@@ -41,7 +41,7 @@ router.post('/', function(req, res) {
     client.query(
       'INSERT INTO tasks (taskname, completionstatus) ' +
       'VALUES ($1, $2)',
-      [newTask.task, 'incomplete'],
+      [newTask.task, 'incompleteila'],
       function(err, result) {
         done();
 
@@ -56,6 +56,35 @@ router.post('/', function(req, res) {
   });
 
 });
+
+router.put('/:id', function(req, res) {
+  taskID = req.params.id;
+  task = req.body;
+
+  console.log('task to update ', task);
+
+  pg.connect(connectionString, function(err, client, done) {
+    if(err) {
+      console.log('connection error: ', err);
+      res.sendStatus(500);
+    }
+
+    client.query(
+      'UPDATE tasks SET taskname=$1, completionstatus=$2 WHERE id=$3',
+      // array of values to use in the query above
+      [task.taskname, 'complete', taskID],
+      function(err, result) {
+        if(err) {
+          console.log('update error: ', err);
+          res.sendStatus(500);
+        } else {
+          res.sendStatus(200);
+        }
+      });
+    }); // close connect
+
+}); // end route
+
 
 
 module.exports = router;
