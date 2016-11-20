@@ -3,9 +3,9 @@ $(document).ready(function () {
     getTasks();
     $('#taskSubmit').on('click', postTask);
     $('#container').on('click', '.complete', completeTask);
-    $('#container').on('click', '.complete', checkCompletion);
+//    $('#container').on('click', '.complete', checkCompletion);
     $('#container').on('click', '.delete', deleteTask);
-
+//    setTimeout(checkCompletion, 500);
 });
 
 function getTasks() {
@@ -13,6 +13,7 @@ function getTasks() {
     type: 'GET',
     url: '/tasks',
     success: function(tasks) {
+      console.log('getTasks: ', tasks);
       appendTasks(tasks);
     },
     error: function() {
@@ -35,6 +36,12 @@ function appendTasks(tasks) {
     $el.append(string);
     $el.append('<button class="complete">Task Completed</button>');
     $el.append('<button class="delete">Delete Task</button>');
+    if (tasks[i].completionstatus == 'complete') {
+      console.log('success');
+      var thing = "#test"+tasks[i].id;
+//          console.log(thing);
+      $(thing).css( "border", "3px solid red" );
+    }
   }
 }
 
@@ -107,18 +114,18 @@ function deleteTask() {
 }
 
 function checkCompletion() {
-  var id = $(this).parent().data('id');
   $.ajax({
     type: 'GET',
-    url: '/complete/' + id,
+    url: '/complete',
     success: function(completionStatus) {
       console.log(completionStatus);
-      if (completionStatus[0].completionstatus == 'complete') {
-        console.log('success');
-        var thing = "test"+id;
-        console.log(thing);
-        $.find(thing).color = '#33cc33';
-
+      for (var i = 0; i < completionStatus.length; i++) {
+        if (completionStatus[i].completionstatus == 'complete') {
+          console.log('success');
+          var thing = "#test"+completionStatus[i].id;
+//          console.log(thing);
+          $(thing).css( "border", "3px solid red" );
+        }
       }
     },
     error: function() {
@@ -126,3 +133,24 @@ function checkCompletion() {
     }
   })
 }
+
+// function checkCompletion() {
+//   var id = $(this).parent().data('id');
+//   $.ajax({
+//     type: 'GET',
+//     url: '/complete/' + id,
+//     success: function(completionStatus) {
+//       console.log(completionStatus);
+//       if (completionStatus[0].completionstatus == 'complete') {
+//         console.log('success');
+//         var thing = "#test"+id;
+//         console.log(thing);
+//         $(thing).css( "border", "3px solid red" );
+//
+//       }
+//     },
+//     error: function() {
+//       console.log('Database error');
+//     }
+//   })
+// }

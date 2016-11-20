@@ -4,9 +4,9 @@ var pg = require('pg');
 var connectionString = 'postgres://localhost:5432/sigma';
 
 
-router.get('/:id', function(req, res) {
-  taskID = req.params.id;
-  console.log('taskID: ', taskID);
+router.get('/', function(req, res) {
+//  taskID = req.params.id;
+  console.log('checking for completion');
   // get books from DB
   pg.connect(connectionString, function(err, client, done) {
     if(err) {
@@ -14,7 +14,7 @@ router.get('/:id', function(req, res) {
       res.sendStatus(500);
     }
 
-    client.query('SELECT completionstatus FROM tasks WHERE id='+taskID, function(err, result) {
+    client.query('SELECT completionstatus FROM tasks', function(err, result) {
       done(); // close the connection.
 
        console.log('result:', result.rows);
@@ -29,8 +29,5 @@ router.get('/:id', function(req, res) {
 
   });
 });
-
-
-
 
 module.exports = router;
