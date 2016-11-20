@@ -13,7 +13,7 @@ router.get('/', function(req, res) {
       res.sendStatus(500);
     }
 
-    client.query('SELECT * FROM tasks', function(err, result) {
+    client.query('SELECT * FROM tasks ORDER BY id', function(err, result) {
       done(); // close the connection.
 
       // console.log('the client!:', client);
@@ -41,7 +41,7 @@ router.post('/', function(req, res) {
     client.query(
       'INSERT INTO tasks (taskname, completionstatus) ' +
       'VALUES ($1, $2)',
-      [newTask.task, 'incompleteila'],
+      [newTask.task, 'incomplete'],
       function(err, result) {
         done();
 
@@ -70,9 +70,9 @@ router.put('/:id', function(req, res) {
     }
 
     client.query(
-      'UPDATE tasks SET taskname=$1, completionstatus=$2 WHERE id=$3',
+      'UPDATE tasks SET completionstatus=$1 WHERE id=$2',
       // array of values to use in the query above
-      [task.taskname, 'complete', taskID],
+      ['complete', taskID],
       function(err, result) {
         if(err) {
           console.log('update error: ', err);

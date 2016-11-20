@@ -30,8 +30,8 @@ function appendTasks(tasks) {
     var task = tasks[i];
     $el.data('id', task.id);
 //    console.log('append task: ', task);
-    var string = '<p>Task: '+tasks[i].taskname+' Status:'+tasks[i].completionstatus+'</p>'
-//console.log('append: ', string);
+    var string = '<p name="task" value="'+ task.taskname +'">Task: '+tasks[i].taskname+' Status:'+tasks[i].completionstatus+'</p>'
+console.log('append: ', string);
     $el.append(string);
     $el.append('<button class="complete">Task Completed</button>');
     $el.append('<button class="delete">Delete Task</button>');
@@ -66,17 +66,19 @@ function completeTask() {
   console.log('id: ', id);
 
   // make book object
-  var task = {};
-  var fields = $(this).parent().children().serializeArray();
-  fields.forEach(function(field) {
-    task[field.name] = field.value;
-  });
-  console.log('complete task: ', task);
+  // var task = {};
+  // var fields = $(this).parent().children();//.serializeArray();
+  // console.log('this par chi: ', $(this).parent().children());
+  // console.log('fields: ', fields);
+  // fields.forEach(function(field) {
+  //   task[field.name] = field.value;
+  // });
+  // console.log('complete task: ', task);
 
   $.ajax({
     type: 'PUT',
     url: '/tasks/' + id,
-    data: task,
+//    data: task,
     success: function(result) {
       console.log('updated!!!!');
       getTasks();
