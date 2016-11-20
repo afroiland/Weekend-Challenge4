@@ -3,8 +3,7 @@ $(document).ready(function () {
     getTasks();
     $('#taskSubmit').on('click', postTask);
     $('#container').on('click', '.complete', completeTask);
-//    $('.delete').on('click', deleteTask);
-
+    $('#container').on('click', '.delete', deleteTask);
 
 });
 
@@ -31,7 +30,7 @@ function appendTasks(tasks) {
     $el.data('id', task.id);
 //    console.log('append task: ', task);
     var string = '<p name="task" value="'+ task.taskname +'">Task: '+tasks[i].taskname+' Status:'+tasks[i].completionstatus+'</p>'
-console.log('append: ', string);
+// console.log('append: ', string);
     $el.append(string);
     $el.append('<button class="complete">Task Completed</button>');
     $el.append('<button class="delete">Delete Task</button>');
@@ -88,4 +87,20 @@ function completeTask() {
     }
   });
 
+}
+
+function deleteTask() {
+  var id = $(this).parent().data('id');
+  console.log(id);
+
+  $.ajax({
+    type: 'DELETE',
+    url: '/tasks/' + id,
+    success: function(result) {
+      getTasks();
+    },
+    error: function(result) {
+      console.log('could not delete book.');
+    }
+  });
 }
