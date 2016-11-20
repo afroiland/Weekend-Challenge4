@@ -3,6 +3,7 @@ $(document).ready(function () {
     getTasks();
     $('#taskSubmit').on('click', postTask);
     $('#container').on('click', '.complete', completeTask);
+    $('#container').on('click', '.complete', checkCompletion);
     $('#container').on('click', '.delete', deleteTask);
 
 });
@@ -29,7 +30,7 @@ function appendTasks(tasks) {
     var task = tasks[i];
     $el.data('id', task.id);
 //    console.log('append task: ', task);
-    var string = '<p name="task" value="'+ task.taskname +'">Task: '+tasks[i].taskname+' Status:'+tasks[i].completionstatus+'</p>'
+    var string = '<p name="task" value="'+ task.taskname +'" id="test'+ task.id +'">Task: '+tasks[i].taskname+' Status:'+tasks[i].completionstatus+'</p>'
 // console.log('append: ', string);
     $el.append(string);
     $el.append('<button class="complete">Task Completed</button>');
@@ -103,4 +104,25 @@ function deleteTask() {
       console.log('could not delete book.');
     }
   });
+}
+
+function checkCompletion() {
+  var id = $(this).parent().data('id');
+  $.ajax({
+    type: 'GET',
+    url: '/complete/' + id,
+    success: function(completionStatus) {
+      console.log(completionStatus);
+      if (completionStatus[0].completionstatus == 'complete') {
+        console.log('success');
+        var thing = "test"+id;
+        console.log(thing);
+        $.find(thing).color = '#33cc33';
+
+      }
+    },
+    error: function() {
+      console.log('Database error');
+    }
+  })
 }
