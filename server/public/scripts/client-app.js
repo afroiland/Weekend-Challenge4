@@ -2,11 +2,20 @@ $(document).ready(function () {
 //  console.log('test');
     getTasks();
     $('#taskSubmit').on('click', postTask);
+    $('#taskSubmit').on('click', initiateClearing);
     $('#container').on('click', '.complete', completeTask);
 //    $('#container').on('click', '.complete', checkCompletion);
     $('#container').on('click', '.delete', deleteTask);
 //    setTimeout(checkCompletion, 500);
 });
+
+function initiateClearing() {
+  setTimeout(clearInput, 100);
+}
+
+function clearInput() {
+  $("#taskEntry").val('');
+}
 
 function getTasks() {
   $.ajax({
@@ -31,7 +40,7 @@ function appendTasks(tasks) {
     var task = tasks[i];
     $el.data('id', task.id);
 //    console.log('append task: ', task);
-    var string = '<p name="task" value="'+ task.taskname +'" id="test'+ task.id +'">Task: '+tasks[i].taskname+' Status:'+tasks[i].completionstatus+'</p>'
+    var string = '<p name="task" value="'+ task.taskname +'" id="test'+ task.id +'">Task: '+tasks[i].taskname+' ----- Status:'+tasks[i].completionstatus+'</p>'
 // console.log('append: ', string);
     $el.append(string);
     $el.append('<button class="complete">Task Completed</button>');
