@@ -1,5 +1,5 @@
 $(document).ready(function () {
-  console.log('test');
+//  console.log('test');
     getTasks();
     $('#taskSubmit').on('click', postTask);
     $('#container').on('click', '.complete', completeTask);
