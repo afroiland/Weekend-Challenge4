@@ -40,7 +40,7 @@ function appendTasks(tasks) {
     var task = tasks[i];
     $el.data('id', task.id);
 //    console.log('append task: ', task);
-    var string = '<p name="task" value="'+ task.taskname +'" id="test'+ task.id +'">Task: '+tasks[i].taskname+' ----- Status:'+tasks[i].completionstatus+'</p>'
+    var string = '<p name="task" value="'+ task.taskname +'" id="test'+ task.id +'">Task: '+tasks[i].taskname+' ----- Status: '+tasks[i].completionstatus+'</p>'
 // console.log('append: ', string);
     $el.append(string);
     $el.append('<button class="complete">Task Completed</button>');

@@ -1,5 +1,4 @@
 
-
 body {
   background-color: lightgrey;
   margin-left: 30px;
@@ -7,4 +6,16 @@ body {
 
 .containerDiv {
   width: 400px;
+}
+
+.input {
+  width: 400px;
+  padding-bottom: 10px;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: black;
+}
+
+button {
+  margin-right: 15px;
 }
